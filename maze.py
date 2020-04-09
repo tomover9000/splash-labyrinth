@@ -20,7 +20,7 @@ class Game:
         self.screen = pygame.display.set_mode((size * BLOCK_SIZE, size * BLOCK_SIZE))
         pygame.display.set_caption('Splash Labyrinth')
         pygame.time.Clock().tick(60)
-        self.Lab = Labyrinth(self.size)
+        self.Lab = Labyrinth(size)
         
 
     def update(self):
@@ -36,8 +36,8 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
 
-        for x in range(self.size) :
-            for y in range(self.size) :
+        for x in range(self.Lab.size) :
+            for y in range(self.Lab.size) :
                 if self.Lab.matrix[x][y] == 1 :
                     pygame.draw.rect(self.screen, WHITE, (x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
         
