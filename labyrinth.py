@@ -39,8 +39,6 @@ class Labyrinth :
     def destroyWalls(self) :
         # we destroy walls randomly 
         walls_to_destroy = random.randint(1, 10)
-        # printing to check idk
-        print(f"Destroying {walls_to_destroy} walls")
         walls_destroyed = 0
         while walls_destroyed < walls_to_destroy :
             # coords of potential wall to remove

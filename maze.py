@@ -14,6 +14,7 @@ BLACK = (0,0,0)
 
 class Game:
 
+
     def __init__(self, size):
 
         self.size = size
@@ -22,6 +23,17 @@ class Game:
         pygame.time.Clock().tick(60)
         self.Lab = Labyrinth(size)
         
+
+    def input(self):
+        event = pygame.event.get()
+
+        if event.type == pygame.KEYDOWN
+            if event.key == pygame.K_SPACE
+                self.solve()
+    
+
+    def solve(self):
+        pass
 
     def update(self):
         self.Lab.update()
@@ -32,6 +44,8 @@ class Game:
         while True:
             self.draw()
             self.update()
+            self.input()
+
 
     def draw(self):
         self.screen.fill(BLACK)
