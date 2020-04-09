@@ -30,7 +30,7 @@ class Game:
         for event in events :
             if event.type == KEYDOWN :
                 if event.key == K_SPACE :
-                    self.Lab.solve(1, 1)
+                    self.Lab.solve(0, 1)
 
     def solve(self):
         pass
