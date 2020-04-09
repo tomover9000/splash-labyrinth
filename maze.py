@@ -3,7 +3,7 @@
 import pygame
 import random
 from labyrinth import Labyrinth
-#from pygame.locals import *
+from pygame.locals import *
 
 BLOCK_SIZE = 20
 WHITE = (255,255,255)
@@ -25,12 +25,12 @@ class Game:
         
 
     def input(self):
-        event = pygame.event.get()
+        events = pygame.event.get()
 
-        if event.type == pygame.KEYDOWN
-            if event.key == pygame.K_SPACE
-                self.solve()
-    
+        for event in events :
+            if event.type == KEYDOWN :
+                if event.key == K_SPACE :
+                    self.Lab.solve(1, 1)
 
     def solve(self):
         pass
