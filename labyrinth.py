@@ -1,3 +1,4 @@
+
 class Labyrinth : 
 
     matrix = []
@@ -12,7 +13,7 @@ class Labyrinth :
         # 0 0 1 0 1 0 0
         # 0 1 0 1 0 1 0
         # 0 0 0 0 0 0 0
-        self.size = SIZE + 2
+        self.size = SIZE
         self.generateMatrix()
 
 
@@ -33,6 +34,21 @@ class Labyrinth :
 
         self.matrix.append([0 for i in range(self.size)])    
 
+    def destroyWall(self) :
+        pass
+
+    def update(self) :
+        # at a random time, destroy a random wall
+        # not the ones on the border
+        pass
+
+
+
+
+
+
+
+    # this method is just for testing
     def printLabyrinth(self) :
         for i in self.matrix :
             for j in i :
