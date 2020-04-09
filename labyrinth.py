@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 class Labyrinth : 
 
@@ -8,6 +9,9 @@ class Labyrinth :
         self.matrix = []
         self.destroy = True
         self.size = SIZE
+        self.destroy_interval = int(1000 * (1.5 ** (self.size / (self.size + 1)) / self.size))
+        self.max_walls_to_destroy = int(self.size // 2) 
+
         if style == "R" or style == "r" or style == "random" or style == "Random" :
             self.generateRandomMatrix()
         else :
@@ -56,7 +60,7 @@ class Labyrinth :
 
     def destroyWalls(self) :
         # we destroy walls randomly 
-        walls_to_destroy = random.randint(1, 20)
+        walls_to_destroy = random.randint(1, self.max_walls_to_destroy)
         walls_destroyed = 0
         while walls_destroyed < walls_to_destroy :
             # coords of potential wall to remove
@@ -69,7 +73,7 @@ class Labyrinth :
 
     def update(self) :
         #call the destroyWall method every 1s
-        if pygame.time.get_ticks() % 100 == 0 and self.destroy :
+        if pygame.time.get_ticks() % self.destroy_interval == 0 and self.destroy :
             self.destroyWalls()  
         pass
     

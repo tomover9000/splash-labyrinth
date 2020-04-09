@@ -45,6 +45,7 @@ class Game:
     def solve(self, x, y) :
         # marcam caile trecute cu 2
         self.draw()
+        self.input()
         
         if x == self.Lab.size - 1 and y == self.Lab.size - 2 :
             self.Lab.matrix[x][y] = 2
