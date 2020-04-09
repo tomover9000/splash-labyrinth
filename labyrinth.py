@@ -1,4 +1,4 @@
-class Labyrinth {
+class Labyrinth : 
 
     matrix = []
 
@@ -32,5 +32,3 @@ class Labyrinth {
             for j in matrix[i] :
                 print(j, end="")
             print()
-
-}
