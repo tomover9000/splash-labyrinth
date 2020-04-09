@@ -1,3 +1,5 @@
+import pygame
+import random
 
 class Labyrinth : 
 
@@ -34,18 +36,25 @@ class Labyrinth :
 
         self.matrix.append([0 for i in range(self.size)])    
 
-    def destroyWall(self) :
-        pass
+    def destroyWalls(self) :
+        # we destroy walls randomly 
+        walls_to_destroy = random.randint(1, 10)
+        # printing to check idk
+        print(f"Destroying {walls_to_destroy} walls")
+        walls_destroyed = 0
+        while walls_destroyed < walls_to_destroy :
+            # coords of potential wall to remove
+            x = random.randint(1, self.size - 2)
+            y = random.randint(1, self.size - 2)
+
+            if self.matrix[x][y] == 0 :
+                self.matrix[x][y] = 1
+                walls_destroyed += 1
 
     def update(self) :
-        # at a random time, destroy a random wall
-        # not the ones on the border
-        pass
-
-
-
-
-
+        # call the destroyWall method every 1s
+        if pygame.time.get_ticks() % 200 == 0 :
+            self.destroyWalls()  
 
 
     # this method is just for testing

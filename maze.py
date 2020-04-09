@@ -24,12 +24,14 @@ class Game:
         
 
     def update(self):
+        self.Lab.update()
         pass
 
 
     def run(self):
         while True:
             self.draw()
+            self.update()
 
     def draw(self):
         self.screen.fill(BLACK)

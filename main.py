@@ -3,7 +3,7 @@ from labyrinth import Labyrinth
 from maze import Game
 
 # globals 
-SIZE = 20 
+SIZE = 30 
 def main() :
     
     pygame.display.init()
