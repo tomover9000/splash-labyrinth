@@ -3,18 +3,9 @@ import random
 
 class Labyrinth : 
 
-    matrix = []
 
     def __init__ (self, SIZE) :
-        # marimea asta include si peretii de la margini
-        # gen
-        # 0 1 0 0 0 0 0
-        # 0 1 0 1 0 1 0
-        # 0 0 1 0 1 0 0
-        # 0 1 0 1 0 1 0
-        # 0 0 1 0 1 0 0
-        # 0 1 0 1 0 1 0
-        # 0 0 0 0 0 1 0
+        self.matrix = []
         self.destroy = True
         self.size = SIZE
         self.generateMatrix()
@@ -23,6 +14,7 @@ class Labyrinth :
 
     def generateMatrix(self) :
         # that's the first line
+        self.matrix = []
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way into the maze
         self.matrix[0][1] = 1

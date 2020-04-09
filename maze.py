@@ -4,6 +4,7 @@ import pygame
 import random
 from labyrinth import Labyrinth
 from pygame.locals import *
+import sys
 
 BLOCK_SIZE = 20
 WHITE = (255,255,255)
@@ -31,17 +32,18 @@ class Game:
             if event.type == KEYDOWN :
                 if event.key == K_SPACE :
                     self.solve(0, 1)
+                if event.key == K_r :
+                    self.Lab = Labyrinth(self.size)
             if event.type == KEYUP :
                 if event.key == K_SPACE :
                     self.Lab.stopDestroyWalls()
             if event.type == QUIT :
-                self.state = "quit"
+                sys.exit()
 
     def solve(self, x, y) :
         # marcam caile trecute cu 2
         self.draw()
         
-        self.Lab.printLabyrinth()
         if x == self.Lab.size - 1 and y == self.Lab.size - 2 :
             self.Lab.matrix[x][y] = 2
             return True 
