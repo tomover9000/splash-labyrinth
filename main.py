@@ -7,8 +7,10 @@ SIZE = 30
 def main() :
 
     SIZE = int(input("Insert Playing size: ")) 
+    DISPLAY_SIZE = int(input("Insert display size (marimea laturii patratului ferestrei): "))
+    play_style = input("Game mode: (R)andom/(G)rid: ")
     pygame.display.init()
-    game = Game(SIZE)
+    game = Game(SIZE, DISPLAY_SIZE, play_style)
     game.run()
     pygame.display.quit()
 

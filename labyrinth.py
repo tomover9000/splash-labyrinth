@@ -4,11 +4,14 @@ import random
 class Labyrinth : 
 
 
-    def __init__ (self, SIZE) :
+    def __init__ (self, SIZE, style) :
         self.matrix = []
         self.destroy = True
         self.size = SIZE
-        self.generateMatrix()
+        if style == "R" or style == "r" or style == "random" or style == "Random" :
+            self.generateRandomMatrix()
+        else :
+            self.generateMatrix()
 
 
     def generateMatrix(self) :
