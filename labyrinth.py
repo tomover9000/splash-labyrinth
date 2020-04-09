@@ -15,6 +15,7 @@ class Labyrinth :
         # 0 0 1 0 1 0 0
         # 0 1 0 1 0 1 0
         # 0 0 0 0 0 1 0
+        self.destroy = True
         self.size = SIZE
         self.generateMatrix()
         self.printLabyrinth()
@@ -24,6 +25,7 @@ class Labyrinth :
         # that's the first line
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way into the maze
+        self.matrix[0][1] = 1
         for i in range(1, self.size - 1) :
             self.matrix.append([])
             for j in range(self.size) :
@@ -60,7 +62,7 @@ class Labyrinth :
 
     def destroyWalls(self) :
         # we destroy walls randomly 
-        walls_to_destroy = random.randint(1, 2)
+        walls_to_destroy = random.randint(1, 20)
         walls_destroyed = 0
         while walls_destroyed < walls_to_destroy :
             # coords of potential wall to remove
@@ -73,40 +75,12 @@ class Labyrinth :
 
     def update(self) :
         #call the destroyWall method every 1s
-        if pygame.time.get_ticks() % 2000 == 0 :
+        if pygame.time.get_ticks() % 100 == 0 and self.destroy :
             self.destroyWalls()  
         pass
     
-    def solve(self, x, y) :
-        # marcam caile trecute cu 2
-        self.printLabyrinth()
-        if x == self.size - 2 and y == self.size - 2 :
-            self.matrix[x][y] = 2
-            return True 
-
-        self.matrix[x][y] = 2
-
-        if self.matrix[x][y] != 0 and self.matrix[x][y] != 2 :
-
-            self.matrix[x][y] = 2
-            
-            # jos
-            if self.solve(x + 1, y) :
-                return True 
-            # dreapta
-            if self.solve(x, y + 1) :
-                return True 
-            # stanga
-            if self.solve(x, y - 1) :
-                return True 
-            # sus
-            if self.solve(x - 1, y) :
-                return True 
-            
-            self.matrix[x][y] = 1
-            return False
-
-        return False
+    def stopDestroyWalls(self) :
+        self.destroy = False
 
     # this method is just for testing
     def printLabyrinth(self) :

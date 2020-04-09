@@ -30,10 +30,43 @@ class Game:
         for event in events :
             if event.type == KEYDOWN :
                 if event.key == K_SPACE :
-                    self.Lab.solve(1, 1)
+                    self.solve(0, 1)
+            if event.type == KEYUP :
+                if event.key == K_SPACE :
+                    self.Lab.stopDestroyWalls()
+            if event.type == QUIT :
+                self.state = "quit"
 
-    def solve(self):
-        pass
+    def solve(self, x, y) :
+        # marcam caile trecute cu 2
+        self.draw()
+        
+        self.Lab.printLabyrinth()
+        if x == self.Lab.size - 1 and y == self.Lab.size - 2 :
+            self.Lab.matrix[x][y] = 2
+            return True 
+
+        if self.Lab.matrix[x][y] != 0 and self.Lab.matrix[x][y] != 2  and self.Lab.matrix[x][y] != 3:
+
+            self.Lab.matrix[x][y] = 2
+            
+            # jos
+            if self.solve(x + 1, y) :
+                return True 
+            # dreapta
+            if self.solve(x, y + 1) :
+                return True 
+            # stanga
+            if self.solve(x, y - 1) :
+                return True 
+            # sus
+            if self.solve(x - 1, y) :
+                return True 
+            
+            self.Lab.matrix[x][y] = 3
+            return False
+
+        return False
 
     def update(self):
         self.Lab.update()
@@ -56,6 +89,9 @@ class Game:
                     pygame.draw.rect(self.screen, WHITE, (y * BLOCK_SIZE, x * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
                 if self.Lab.matrix[x][y] == 2 :
                     pygame.draw.rect(self.screen, RED, (y * BLOCK_SIZE, x * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+                if self.Lab.matrix[x][y] == 3 :
+                    pygame.draw.rect(self.screen, GREEN, (y * BLOCK_SIZE, x * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+
         
         pygame.display.update()
 
