@@ -16,7 +16,8 @@ class Labyrinth :
         # 0 1 0 1 0 1 0
         # 0 0 0 0 0 0 0
         self.size = SIZE
-        self.generateMatrix()
+        self.generateRandomMatrix()
+        self.printLabyrinth()
 
 
     def generateMatrix(self) :
@@ -41,7 +42,14 @@ class Labyrinth :
         for i in range(1, self.size - 1) :
             self.matrix.append([])
             for j in range(self.size) :
-                self.matrix[i].append()
+
+                if j == 0 or j == self.size - 1 :
+                    self.matrix[i].append(0)
+                else :
+                    self.matrix[i].append(random.randint(0, 1))
+
+        self.matrix.append([0 for i in range(self.size)])    
+    
 
     def destroyWalls(self) :
         # we destroy walls randomly 
@@ -58,8 +66,9 @@ class Labyrinth :
 
     def update(self) :
         # call the destroyWall method every 1s
-        if pygame.time.get_ticks() % 2000 == 0 :
-            self.destroyWalls()  
+        # if pygame.time.get_ticks() % 2000 == 0 :
+        #     self.destroyWalls()  
+        pass
     
     def solve(self, x, y) :
         # marcam caile trecute cu 2
@@ -85,6 +94,8 @@ class Labyrinth :
             # sus
             if self.solve(x - 1, y) :
                 return True 
+            
+            self.matrix[x][y] = 3
             
         return False
 
