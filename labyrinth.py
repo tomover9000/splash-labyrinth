@@ -9,7 +9,6 @@ class Labyrinth :
         self.destroy = True
         self.size = SIZE
         self.generateMatrix()
-        self.printLabyrinth()
 
 
     def generateMatrix(self) :

@@ -3,9 +3,10 @@ from labyrinth import Labyrinth
 from maze import Game
 
 # globals 
-SIZE = 20 
+SIZE = 30 
 def main() :
-    
+
+    SIZE = int(input("Insert Playing size: ")) 
     pygame.display.init()
     game = Game(SIZE)
     game.run()
