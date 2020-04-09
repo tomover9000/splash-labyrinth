@@ -16,7 +16,7 @@ class Labyrinth :
         # 0 1 0 1 0 1 0
         # 0 0 0 0 0 1 0
         self.size = SIZE
-        self.generateRandomMatrix()
+        self.generateMatrix()
         self.printLabyrinth()
 
 
@@ -24,7 +24,6 @@ class Labyrinth :
         # that's the first line
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way into the maze
-        self.matrix[0][1] = 1
         for i in range(1, self.size - 1) :
             self.matrix.append([])
             for j in range(self.size) :
@@ -73,9 +72,9 @@ class Labyrinth :
                 walls_destroyed += 1
 
     def update(self) :
-        # call the destroyWall method every 1s
-        # if pygame.time.get_ticks() % 2000 == 0 :
-        #     self.destroyWalls()  
+        #call the destroyWall method every 1s
+        if pygame.time.get_ticks() % 2000 == 0 :
+            self.destroyWalls()  
         pass
     
     def solve(self, x, y) :
@@ -85,7 +84,8 @@ class Labyrinth :
             self.matrix[x][y] = 2
             return True 
 
-                
+        self.matrix[x][y] = 2
+
         if self.matrix[x][y] != 0 and self.matrix[x][y] != 2 :
 
             self.matrix[x][y] = 2
@@ -103,8 +103,9 @@ class Labyrinth :
             if self.solve(x - 1, y) :
                 return True 
             
-            self.matrix[x][y] = 3
-            
+            self.matrix[x][y] = 1
+            return False
+
         return False
 
     # this method is just for testing

@@ -30,7 +30,7 @@ class Game:
         for event in events :
             if event.type == KEYDOWN :
                 if event.key == K_SPACE :
-                    self.Lab.solve(0, 1)
+                    self.Lab.solve(1, 1)
 
     def solve(self):
         pass
@@ -53,7 +53,9 @@ class Game:
         for x in range(self.Lab.size) :
             for y in range(self.Lab.size) :
                 if self.Lab.matrix[x][y] == 1 :
-                    pygame.draw.rect(self.screen, WHITE, (x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+                    pygame.draw.rect(self.screen, WHITE, (y * BLOCK_SIZE, x * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
+                if self.Lab.matrix[x][y] == 2 :
+                    pygame.draw.rect(self.screen, RED, (y * BLOCK_SIZE, x * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE))
         
         pygame.display.update()
 
