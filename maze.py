@@ -6,10 +6,13 @@ from labyrinth import Labyrinth
 from pygame.locals import *
 import sys
 
+GRAY = (84, 84, 84)
+SILVER = (194, 194, 194)
 WHITE = (255,255,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLACK = (0,0,0)
+BLUE = (0, 0, 255)
 
 
 class Game:
@@ -32,15 +35,36 @@ class Game:
 
         for event in events :
             if event.type == KEYDOWN :
+                if event.key == K_RIGHT :
+                    winner_2 = self.solve(0, 1)
+                    if winner_2 == True:
+                        self.screen.fill(GREEN)
+                        pygame.display.update()
+                    else:
+                        self.screen.fill(RED)
+                        pygame.display.update()
+
                 if event.key == K_SPACE :
-                    self.solve(0, 1)
+                    winner_1 = self.solve(0, 1)
+                    if winner_1 == True:
+                        self.screen.fill(BLUE)
+                        pygame.display.update()
+                    else:
+                        self.screen.fill(RED)
+                        pygame.display.update()
+                
                 if event.key == K_r :
                     self.Lab = Labyrinth(self.size, self.style)
-            if event.type == KEYUP :
-                if event.key == K_SPACE :
-                    self.Lab.stopDestroyWalls()
+
             if event.type == QUIT :
                 sys.exit()
+            if event.type == KEYUP:
+                if event.key == K_RIGHT:
+                    self.Lab.stopDestroyWalls()
+                if event.key == K_SPACE:
+                    self.Lab.stopDestroyWalls()
+
+                        
 
     def solve(self, x, y) :
         # marcam caile trecute cu 2
@@ -93,9 +117,9 @@ class Game:
                 if self.Lab.matrix[x][y] == 1 :
                     pygame.draw.rect(self.screen, WHITE, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
                 if self.Lab.matrix[x][y] == 2 :
-                    pygame.draw.rect(self.screen, RED, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                    pygame.draw.rect(self.screen, GRAY, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
                 if self.Lab.matrix[x][y] == 3 :
-                    pygame.draw.rect(self.screen, GREEN, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                    pygame.draw.rect(self.screen, SILVER, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
 
         
         pygame.display.update()
