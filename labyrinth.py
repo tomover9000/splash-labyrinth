@@ -4,12 +4,13 @@ import math
 
 class Labyrinth : 
 
-
     def __init__ (self, SIZE, style) :
         self.matrix = []
         self.destroy = True
         self.size = SIZE
-        self.destroy_interval = int(1000 * (1.5 ** (self.size / (self.size + 1)) / self.size))
+        self.TOTAL_WALLS = 0
+        # self.destroy_interval = int(1000 * (1.5 ** (self.size / (self.size + 1)) / self.size))
+        self.destroy_interval = int(200 / 1.05 ** self.size)
         self.max_walls_to_destroy = int(self.size // 2) 
 
         if style == "R" or style == "r" or style == "random" or style == "Random" :
@@ -35,6 +36,7 @@ class Labyrinth :
                         self.matrix[i].append(1)
                     else :
                         self.matrix[i].append(0)
+                        self.TOTAL_WALLS += 1
 
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way out of the matrix
@@ -51,7 +53,10 @@ class Labyrinth :
                 if j == 0 or j == self.size - 1 :
                     self.matrix[i].append(0)
                 else :
-                    self.matrix[i].append(random.randint(0, 1))
+                    value = random.randint(0, 1)
+                    self.matrix[i].append(value)
+                    if value == 0 :
+                        self.TOTAL_WALLS += 1
 
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way out of the matrix
@@ -62,14 +67,17 @@ class Labyrinth :
         # we destroy walls randomly 
         walls_to_destroy = random.randint(1, self.max_walls_to_destroy)
         walls_destroyed = 0
-        while walls_destroyed < walls_to_destroy :
-            # coords of potential wall to remove
-            x = random.randint(1, self.size - 2)
-            y = random.randint(1, self.size - 2)
+        if walls_to_destroy < self.TOTAL_WALLS :
+            while walls_destroyed < walls_to_destroy :
+                # coords of potential wall to remove
+                x = random.randint(1, self.size - 2)
+                y = random.randint(1, self.size - 2)
 
-            if self.matrix[x][y] == 0 :
-                self.matrix[x][y] = 1
-                walls_destroyed += 1
+                if self.matrix[x][y] == 0 :
+                    self.matrix[x][y] = 1
+                    walls_destroyed += 1
+            self.TOTAL_WALLS -= walls_destroyed
+            print(self.TOTAL_WALLS)
 
     def update(self) :
         #call the destroyWall method every 1s
