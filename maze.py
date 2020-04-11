@@ -28,6 +28,11 @@ class Game:
         pygame.display.set_caption('Splash Labyrinth')
         pygame.time.Clock().tick(60)
         self.Lab = Labyrinth(size, style)
+        # this var keeps track of winners situation
+        # 0 means the game is still running
+        # 1 means p1 wins, 2 means p2 wins
+        # 3 means the player who pushed the button lost
+        self.winner = 0
         
 
     def input(self):
@@ -36,25 +41,20 @@ class Game:
         for event in events :
             if event.type == KEYDOWN :
                 if event.key == K_RIGHT :
-                    winner_2 = self.solve(0, 1)
-                    if winner_2 == True:
-                        self.screen.fill(GREEN)
-                        pygame.display.update()
+                    if self.solve(0, 1) :
+                        self.winner = 2
                     else:
-                        self.screen.fill(RED)
-                        pygame.display.update()
+                        self.winner = 0
 
                 if event.key == K_SPACE :
-                    winner_1 = self.solve(0, 1)
-                    if winner_1 == True:
-                        self.screen.fill(BLUE)
-                        pygame.display.update()
+                    if self.solve(0, 1) == True :
+                        self.winner = 1
                     else:
-                        self.screen.fill(RED)
-                        pygame.display.update()
+                        self.winner = 3
                 
                 if event.key == K_r :
                     self.Lab = Labyrinth(self.size, self.style)
+                    self.winner = 0
 
             if event.type == QUIT :
                 sys.exit()
@@ -112,16 +112,22 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
 
-        for x in range(self.Lab.size) :
-            for y in range(self.Lab.size) :
-                if self.Lab.matrix[x][y] == 1 :
-                    pygame.draw.rect(self.screen, WHITE, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
-                if self.Lab.matrix[x][y] == 2 :
-                    pygame.draw.rect(self.screen, GRAY, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
-                if self.Lab.matrix[x][y] == 3 :
-                    pygame.draw.rect(self.screen, SILVER, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+        if self.winner == 0 :
+            for x in range(self.Lab.size) :
+                for y in range(self.Lab.size) :
+                    if self.Lab.matrix[x][y] == 1 :
+                        pygame.draw.rect(self.screen, WHITE, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                    if self.Lab.matrix[x][y] == 2 :
+                        pygame.draw.rect(self.screen, GRAY, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                    if self.Lab.matrix[x][y] == 3 :
+                        pygame.draw.rect(self.screen, SILVER, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+        elif self.winner == 1 :
+            self.screen.fill(BLUE)
+        elif self.winner == 2 :
+            self.screen.fill(GREEN)
+        elif self.winner == 3 :
+            self.screen.fill(RED)
 
-        
         pygame.display.update()
 
 

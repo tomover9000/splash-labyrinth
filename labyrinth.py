@@ -77,7 +77,6 @@ class Labyrinth :
                     self.matrix[x][y] = 1
                     walls_destroyed += 1
             self.TOTAL_WALLS -= walls_destroyed
-            print(self.TOTAL_WALLS)
 
     def update(self) :
         #call the destroyWall method every 1s
