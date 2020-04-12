@@ -64,7 +64,20 @@ class Game:
                 if event.key == K_SPACE:
                     self.Lab.stopDestroyWalls()
 
-                        
+
+    def bfs(self, start_x, start_y) :
+        # coada 
+        Q = []
+        # mark start as discovered
+        self.Lab.matrix[start_x][start_y] = 2
+        # let's append tuples consisting of coords in maze
+        Q.append((start_x, start_y))
+
+        while len(Q) > 0 :
+            current = Q.pop()
+            if current.x == self.Lab.size - 1 and current.y == self.Lab.size - 1 :
+                return True
+
 
     def solve(self, x, y) :
         # marcam caile trecute cu 2
@@ -122,10 +135,13 @@ class Game:
                     if self.Lab.matrix[x][y] == 3 :
                         pygame.draw.rect(self.screen, SILVER, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
         elif self.winner == 1 :
+            # winner player 1
             self.screen.fill(BLUE)
         elif self.winner == 2 :
+            # winner player 2
             self.screen.fill(GREEN)
         elif self.winner == 3 :
+            # loser
             self.screen.fill(RED)
 
         pygame.display.update()
