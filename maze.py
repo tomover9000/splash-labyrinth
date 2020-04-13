@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import pygame
-import heapq
 import random
 from labyrinth import Labyrinth
 from cell import Cell
@@ -28,7 +27,7 @@ class Game:
         self.size = size
         self.screen = pygame.display.set_mode((self.disp_size, self.disp_size))
         pygame.display.set_caption('Splash Labyrinth')
-        pygame.time.Clock().tick(10)
+        pygame.time.Clock().tick(60)
         self.Lab = Labyrinth(size, style)
         # this var keeps track of winners situation
         # 0 means the game is still running
@@ -96,7 +95,6 @@ class Game:
             if current is self.end :
                 # display path
                 self.displayPath(current, True)
-                print("We done")
                 return True
             # get vecini
             adj_cells = self.getAdjacentCells(current)
@@ -159,13 +157,13 @@ class Game:
             cell = cell.parent
         path.append(cell)
         self.Lab.matrix[cell.x][cell.y] = 3
-        if pygame.time.get_ticks() % 2 == 0 :
+        if pygame.time.get_ticks() % int(self.size / 10) == 0 :
             self.draw()
         if not isLast :
             if end != self.end :
                 for i in path :
                     self.Lab.matrix[i.x][i.y] = 1
-            if pygame.time.get_ticks() % 2 == 0 :
+            if pygame.time.get_ticks() % int(self.size / 10) == 0 :
                 self.draw()
 
     def solve(self, x, y) :

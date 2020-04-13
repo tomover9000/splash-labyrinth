@@ -6,7 +6,6 @@ class Labyrinth :
 
     def __init__ (self, SIZE, style) :
         self.matrix = []
-        self.initial_matrix = []
         self.destroy = True
         self.size = SIZE
         self.TOTAL_WALLS = 0
