@@ -14,10 +14,9 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 BLACK = (0,0,0)
 BLUE = (0, 0, 255)
-
+CYAN = (77,237,255)
 
 class Game:
-
 
     def __init__(self, size, disp_size, style):
 
@@ -27,7 +26,7 @@ class Game:
         self.size = size
         self.screen = pygame.display.set_mode((self.disp_size, self.disp_size))
         pygame.display.set_caption('Splash Labyrinth')
-        pygame.time.Clock().tick(60)
+        pygame.time.Clock().tick(30)
         self.Lab = Labyrinth(size, style)
         # this var keeps track of winners situation
         # 0 means the game is still running
@@ -35,14 +34,11 @@ class Game:
         # 3 means the player who pushed the button lost
         self.winner = 0
 
-
     def genCells(self) : 
         self.cells = []
         for i in range(self.Lab.size) :
             for j in range(self.Lab.size) :
                 self.cells.append(Cell(i, j, bool(self.Lab.matrix[i][j])))
-               
-        
 
     def input(self):
         events = pygame.event.get()
@@ -50,18 +46,16 @@ class Game:
         for event in events :
             if event.type == KEYDOWN :
                 if event.key == K_RIGHT :
-                    self.Astar()
+                    if self.Astar() :
+                        self.winner = 2
+                    else:
+                        self.winner = 3
 
-                #     if self.bfs(0, 1) :
-                #         self.winner = 2
-                #     else:
-                #         self.winner = 0
-
-                # if event.key == K_SPACE :
-                #     if self.bfs(0, 1) == True :
-                #         self.winner = 1
-                #     else:
-                #         self.winner = 3
+                if event.key == K_SPACE :
+                    if self.Astar() :
+                        self.winner = 1
+                    else:
+                        self.winner = 3
                 
                 if event.key == K_r :
                     self.Lab = Labyrinth(self.size, self.style)
@@ -74,7 +68,6 @@ class Game:
                     self.Lab.stopDestroyWalls()
                 if event.key == K_SPACE:
                     self.Lab.stopDestroyWalls()
-
 
     def Astar(self) :
         self.genCells()
@@ -112,9 +105,6 @@ class Game:
         self.displayPath(current, True)
         return False
     
-
-
-
     def getHeuristic(self, cell) :
         return abs(self.end.x - cell.x) + abs(self.end.y - cell.y)
     
@@ -140,7 +130,6 @@ class Game:
             vecini.append(self.getCell(cell.x, cell.y + 1))
         return vecini
 
-
     def updateCell(self, adj, cell) :
         adj.g = cell.g + 1
         adj.h = self.getHeuristic(adj)
@@ -153,18 +142,18 @@ class Game:
         cell = end
         while cell is not self.start :
             path.append(cell)
-            self.Lab.matrix[cell.x][cell.y] = 3
             cell = cell.parent
         path.append(cell)
-        self.Lab.matrix[cell.x][cell.y] = 3
-        if pygame.time.get_ticks() % int(self.size / 10) == 0 :
+        if pygame.time.get_ticks() % int(self.size / 10) == 0  or isLast :
+            # draw the black and white matrix
             self.draw()
-        if not isLast :
-            if end != self.end :
-                for i in path :
-                    self.Lab.matrix[i.x][i.y] = 1
-            if pygame.time.get_ticks() % int(self.size / 10) == 0 :
-                self.draw()
+            for cell in path :
+                if isLast :
+                    # make the path permanent on the numeric matrix
+                    self.Lab.matrix[cell.x][cell.y] = 3
+                # draw every path cell
+                pygame.draw.rect(self.screen, CYAN, (cell.y * self.BLOCK_SIZE, cell.x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+            pygame.display.update()
 
     def solve(self, x, y) :
         # marcam caile trecute cu 2
@@ -208,19 +197,10 @@ class Game:
             self.update()
             self.input()
 
-
     def draw(self):
-        self.screen.fill(BLACK)
 
         if self.winner == 0 :
-            for x in range(self.Lab.size) :
-                for y in range(self.Lab.size) :
-                    if self.Lab.matrix[x][y] == 1 :
-                        pygame.draw.rect(self.screen, WHITE, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
-                    if self.Lab.matrix[x][y] == 2 :
-                        pygame.draw.rect(self.screen, GRAY, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
-                    if self.Lab.matrix[x][y] == 3 :
-                        pygame.draw.rect(self.screen, RED, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+            self.screen.fill(BLACK)
         elif self.winner == 1 :
             # winner player 1
             self.screen.fill(BLUE)
@@ -231,9 +211,13 @@ class Game:
             # loser
             self.screen.fill(RED)
 
+        for x in range(self.Lab.size) :
+            for y in range(self.Lab.size) :
+                if self.Lab.matrix[x][y] == 1 :
+                    pygame.draw.rect(self.screen, WHITE, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                if self.Lab.matrix[x][y] == 2 :
+                    pygame.draw.rect(self.screen, GRAY, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+                if self.Lab.matrix[x][y] == 3 :
+                    pygame.draw.rect(self.screen, CYAN, (y * self.BLOCK_SIZE, x * self.BLOCK_SIZE, self.BLOCK_SIZE, self.BLOCK_SIZE))
+
         pygame.display.update()
-
-
-
-
-    
