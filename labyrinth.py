@@ -6,10 +6,10 @@ class Labyrinth :
 
     def __init__ (self, SIZE, style) :
         self.matrix = []
+        self.initial_matrix = []
         self.destroy = True
         self.size = SIZE
         self.TOTAL_WALLS = 0
-        # self.destroy_interval = int(1000 * (1.5 ** (self.size / (self.size + 1)) / self.size))
         self.destroy_interval = int(200 / 1.05 ** self.size)
         self.max_walls_to_destroy = int(self.size // 2) 
 
@@ -17,7 +17,6 @@ class Labyrinth :
             self.generateRandomMatrix()
         else :
             self.generateMatrix()
-
 
     def generateMatrix(self) :
         # that's the first line
@@ -61,6 +60,19 @@ class Labyrinth :
         self.matrix.append([0 for i in range(self.size)])    
         # this is the way out of the matrix
         self.matrix[self.size - 1][self.size - 2] = 1
+    
+    def getAdjacentCells(self, x, y) :
+        points = []
+        if x + 1 <= self.size - 1 :
+            points.append((x + 1, y))
+        if x - 1 >= 1 :
+            points.append((x - 1, y))
+        if y + 1 <= self.size - 1 :
+            points.append((x, y + 1))
+        if y - 1 >= 1 :
+            points.append((x, y - 1))
+
+        return points
     
 
     def destroyWalls(self) :
