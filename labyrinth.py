@@ -11,7 +11,7 @@ class Labyrinth :
         self.TOTAL_WALLS = 0
         self.destroy_interval = int(200 / 1.05 ** self.size)
         self.max_walls_to_destroy = int(self.size // 2) 
-
+        self.check_chance = 1
         if style == "R" or style == "r" or style == "random" or style == "Random" :
             self.generateRandomMatrix()
         else :
@@ -78,6 +78,12 @@ class Labyrinth :
         # we destroy walls randomly 
         walls_to_destroy = random.randint(1, self.max_walls_to_destroy)
         walls_destroyed = 0
+        chance = random.randint(1, 100)
+        
+        if chance > 40 and self.check_chance == 1:
+            self.matrix[1][1] = 1
+            self.matrix[self.size - 2][self.size - 2] = 1
+            self.check_chance = 0
         if walls_to_destroy < self.TOTAL_WALLS :
             while walls_destroyed < walls_to_destroy :
                 # coords of potential wall to remove
