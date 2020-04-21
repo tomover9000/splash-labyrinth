@@ -7,6 +7,8 @@ When a player first presses the button to check if there's a path to the exit th
 
 # how the game works
 
+The file you need to run is main.py
+
 First you'll need to decide a playing size, display size and game mode (random or grid).
 
 There are 2 players, player1 uses Space and the other one uses right arrow.
