@@ -16,3 +16,7 @@ There are 2 players, player1 uses Space and the other one uses right arrow.
 If one of the players presses a button the path finding algorithm starts, if there's a path that player wins (green - player1 wins, blue -player2 wins), if not the player loses (the background it's gonna turn red).
 
 The the game can be restarted by pressing r.
+
+# requirements
+
+You obviously need python to run this and the pygame library for python.
