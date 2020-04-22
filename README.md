@@ -8,8 +8,9 @@ When a player first presses the button to check if there's a path to the exit th
 # how the game works
 
 The file you need to run is main.py
-
-First you'll need to decide a playing size, display size and game mode (random or grid).
+The game gets more difficult as the maze size increases, you can choose a size betweeen 20 and 100
+You also need to specify the window size, it's a square window.
+Then you'll need to pick the game mode (random or grid).
 
 There are 2 players, player1 uses Space and the other one uses right arrow.
 
