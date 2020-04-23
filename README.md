@@ -18,6 +18,8 @@ If one of the players presses a button the path finding algorithm starts, if the
 
 The the game can be restarted by pressing r.
 
+![](giphy.gif)
+
 # requirements
 
 You obviously need python to run this and the pygame library for python.
