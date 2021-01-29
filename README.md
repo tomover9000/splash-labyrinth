@@ -23,7 +23,7 @@ The the game can be restarted by pressing r.
 # How to run
 
 First run
-pip3 install -r requirement.txt
+```pip3 install -r requirement.txt```
 
 then
-./main.py
+```./main.py```
