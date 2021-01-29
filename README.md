@@ -20,6 +20,10 @@ The the game can be restarted by pressing r.
 
 ![](giphy.gif)
 
-# requirements
+# How to run
 
-You obviously need python to run this and the pygame library for python.
+First run
+pip3 install -r requirement.txt
+
+then
+./main.py
